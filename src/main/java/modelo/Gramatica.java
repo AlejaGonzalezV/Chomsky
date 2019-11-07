@@ -552,29 +552,30 @@ public class Gramatica {
     {
         ArrayList<Character> alcanzables = new ArrayList<Character>(darAlcanzables());
         ArrayList<Character> generadores = new ArrayList<Character>(darGeneradores());
-
-        
-//        for(int i=0; i<)
+        ArrayList<Character> noAlcanzables = new ArrayList<Character>(generadores);
+        noAlcanzables.removeAll(alcanzables);     
         
 //        ArrayList<Character> noAlcanzables = generadores.Except(alcanzables).ToList<Character>();
 
-        foreach (Character noAlc in noAlcanzables)
+//        foreach (Character noAlc in noAlcanzables)
+        for(int i=0; i<noAlcanzables.size(); i++)
         {
             //eliminar la regla
-            Regla regla = darRegla(noAlc);
+            Regla regla = darRegla(noAlcanzables.get(i));
             if (regla != null)
             {
-                reglas.Remove(regla);
+                reglas.remove(regla);
             }
         }
 
         //En cada regla eliminar producciones que contengan variables NO Alcanzables
-        foreach (Regla rule in reglas)
+//        foreach (Regla rule in reglas)
+        for(int i=0; i<reglas.size(); i++)
         {
-            rule.eliminarProduccionesConLasVariables(noAlcanzables);
-            if (rule.producciones.Count() == 0)
+            reglas.get(i).eliminarProduccionesConLasVariables(noAlcanzables);
+            if (reglas.get(i).getProducciones().size() == 0)
             {
-                reglas.Remove(rule);
+                reglas.remove(reglas.get(i));
             }
         }
 
@@ -587,11 +588,12 @@ public class Gramatica {
     /// </summary>
     public void eliminarProduccionesLambda()
     {
-        List<Character> anulables = darAnulables();
+        ArrayList<Character> anulables = new ArrayList<Character>(darAnulables());
        
-        foreach(Regla regla in reglas)
+//        foreach(Regla regla in reglas)
+        for(int i=0; i<reglas.size(); i++)
         {
-            regla.simularProduccionesLambda(anulables);
+            reglas.get(i).simularProduccionesLambda(anulables);
             
         }
     }
@@ -601,22 +603,24 @@ public class Gramatica {
     /// </summary>
     public void eliminarProduccionesUnitarias()
     {
-        List<Character> generadores = darGeneradores();
+        ArrayList<Character> generadores = new ArrayList<Character>(darGeneradores());
 
-        foreach(Character gen in generadores)
+//        foreach(Character gen in generadores)
+        for(int i=0; i<generadores.size(); i++)
         {
-            List<Character> conjuntoUnitario = darConjuntoUnitario(gen);
-            Regla rule = darRegla(gen);
+            ArrayList<Character> conjuntoUnitario = new ArrayList<Character>(darConjuntoUnitario(generadores.get(i)));
+            Regla rule = darRegla(generadores.get(i));
             rule.eliminarProduccionesUnitarias();
 
-            foreach (Character variable in conjuntoUnitario)
+//            foreach (Character variable in conjuntoUnitario)
+            for(int j=0; j<conjuntoUnitario.size(); i++)
             {
-                if(variable.Equals(gen) == false)
+                if((conjuntoUnitario.get(i) == generadores.get(i)) == false) //Duda. == || equals
                 {
-                    Regla regla = darRegla(variable);
+                    Regla regla = darRegla(conjuntoUnitario.get(i));
                     if(regla != null)
                     {
-                        List<string> produccionesNuevas = regla.darProduccionesNoUnitarias();
+                        ArrayList<String> produccionesNuevas = new ArrayList<String>(regla.darProduccionesNoUnitarias());
                         rule.modificarProducciones(produccionesNuevas);
                     }
                 }
@@ -634,8 +638,9 @@ public class Gramatica {
     /// </summary>
     public void generarVariablesPorCadaTerminal()
     {
-        List<Character> variablesPermitidas = variablesPosibles.Except(variables).ToList<Character>(); //para asegurar
-        int numeroDeReglas = reglas.Count();
+        ArrayList<Character> variablesPermitidas = new ArrayList<Character>(variablesPosibles);
+        variablesPermitidas.removeAll(variables);
+        int numeroDeReglas = reglas.size();
 
         //ASIGNACION
         Dictionary<Character, Character> asignaciones = new Dictionary<Character, Character>();       
