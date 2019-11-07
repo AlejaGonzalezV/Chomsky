@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 import javafx.stage.Stage;
+import modelo.Gramatica;
 
 public class Main extends Application{
 
@@ -18,6 +19,12 @@ public class Main extends Application{
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Chomsky normal form");
 		primaryStage.show();
+		String texto = "S : aXbX\r\n" + 
+				"\r\n" + 
+				"X : aY | bY | &\r\n" + 
+				"\r\n" + 
+				"Y : X | c";
+		Gramatica gramatica = new Gramatica(texto);
 		
 		
 	}

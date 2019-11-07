@@ -1,8 +1,6 @@
 package modelo;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -54,7 +52,12 @@ public class Gramatica {
         variables = new ArrayList<Character>();
         terminales = new ArrayList<Character>();
         agregar();
-        modGramatica(texto);
+        try {
+			modGramatica(texto);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
         
     
@@ -152,7 +155,7 @@ public class Gramatica {
     	
     }
     
-    public void modGramatica(String texto) {
+    public void modGramatica(String texto) throws Exception {
         String[] lineas = texto.split("\n");
         for (int i = 0; i < lineas.length; i++)
         {
@@ -767,7 +770,7 @@ public class Gramatica {
         for(int i = 0; i < nuevasReglas.size() && buscada == null; i++)
         {
             Regla r = nuevasReglas.get(i);
-            List<String> producciones = r.producciones; //una lista de una unica produccion
+            List<String> producciones = r.getProducciones(); //una lista de una unica produccion
 
             if(producciones.get(0).equals(prod))
             {
@@ -778,181 +781,5 @@ public class Gramatica {
         return buscada;
     }
 
-    /// <summary>
-    /// Metodo que implementa el algoritmo CYK para determinar si la gramatica genera una determinada cadena 
-    /// pasada como parametro. Se asume que la gramatica ya ha sido convertida a su FNC.
-    /// Se tiene el atributo "matriz" para comprobar como el algoritmo se desarrollo.
-    /// </summary>
-    /// <param name="cadena">
-    /// String que representa la cadena
-    /// </param>
-    /// <returns>
-    /// Retorna true si la gramatica genera la cadena pasada como parametro. En caso contrario, retorna false
-    /// </returns>
-    public bool algoritmoCYK(string cadena)
-    {
-        cadena = cadena.Trim();
-        //comprobacion del formato de la cadena -----------------
-        if(cadena.Count() == 0)
-        {
-            throw new Exception("Debe especificar una cadena no vacia");
-        }
-        foreach(var c in cadena)
-        {
-            if(terminales.Contains(c) == false)
-            {
-                throw new Exception("La cadena contiene caracteres que no existen en el alfabeto de la gramatica");
-            }
-        }
-        //-------------------------------------------------------
-
-        bool respuesta = false;
-
-        int n = cadena.Count();
-        matriz = new List<string>[n, n];
-       
-
-        for(int j = 1; j <= n; j++)
-        {
-            if(j == 1)
-            {
-                //Recorrido por la cadena
-                for(int x = 0; x < cadena.Count(); x++)
-                {
-                    Character caracter = cadena.ElementAt(x);
-                  
-                    List<string> list = darGeneradoresDeAlMenosUnaDeLasProducciones
-                        (new List<string>() { caracter.ToString() });
-                   
-
-                    matriz[x, j-1] = list;
-                    
-                }
-              
-            }
-            else
-            {
-                for (int i = 1; i <= n - j + 1; i++)
-                {
-                    List<string> generadores = new List<string>();
-
-                    for (int k = 1; k <= j - 1; k++)
-                    {
-                        List<string> lista1 = matriz[i-1, k-1];
-                        List<string> lista2 = matriz[i + k - 1, j - k - 1];
-
-                        List<string> posibles = generarPosiblesProducciones(lista1, lista2);
-                        List<string> gen = darGeneradoresDeAlMenosUnaDeLasProducciones(posibles);
-
-                        generadores = generadores.Union(gen).ToList<string>();
-                    }
-                    matriz[i - 1, j - 1] = generadores;
-                }
-            }
-        }
-
-        List<string> lista = matriz[0, n - 1];
-        if(lista.Contains("S"))
-        {
-            respuesta = true;
-        }
-
-        return respuesta;
-    }
-
-    /// <summary>
-    /// Obtiene las variables que en su regla asociada producen alguna de las producciones pasadas como parametro
-    /// </summary>
-    /// <param name="producciones">
-    /// Lista de string que representa las producciones
-    /// </param>
-    /// <returns>
-    /// Una lista de string con las variables
-    /// </returns>
-    public List<string> darGeneradoresDeAlMenosUnaDeLasProducciones(List<string> producciones)
-    {
-        List<string> respuesta = new List<string>();
-
-        foreach(string prod in producciones)
-        {
-            foreach(Regla reg in reglas)
-            {
-                if(reg.contieneProduccion(prod))
-                {
-                    string generador = reg.generador.ToString();
-                    if(respuesta.Contains(generador) == false)
-                    {
-                        respuesta.Add(generador);
-                    }
-                }
-            }
-        }
-
-        return respuesta;
-    }
-
-    /// <summary>
-    /// Genera producciones a partir de dos listas cuyo contenido son variables. Metodo utilizado en el metodo
-    /// que implementa el algorito CYK.
-    /// </summary>
-    /// <param name="lista1">
-    /// Lista de string
-    /// </param>
-    /// <param name="lista2">
-    /// Lista de string
-    /// </param>
-    /// <returns>
-    /// Retorna una lista de string con las nuevas producciones
-    /// </returns>
-    public List<string> generarPosiblesProducciones(List<string> lista1, List<string> lista2)
-    {
-        List<string> respuesta = new List<string>();
-
-        if(lista1.Count() == 0 && lista2.Count() > 0)
-        {
-            respuesta = lista2;
-        }
-        else if(lista1.Count() > 0 && lista2.Count() == 0)
-        {
-            respuesta = lista1;
-        }
-        else if(lista1.Count() > 0 && lista2.Count() > 0)
-        {
-            for (int i = 0; i < lista1.Count(); i++)
-            {
-                string cad1 = lista1.ElementAt(i);
-
-                for (int j = 0; j < lista2.Count(); j++)
-                {
-                    string cad2 = lista2.ElementAt(j);
-                    string nuevo = cad1 + cad2;
-                    respuesta.Add(nuevo);
-                }
-            }
-        }
-        
-        return respuesta;
-    }
-
-
-    /// <summary>
-    /// Genera una cadena de texto que representa este objeto Gramatica
-    /// </summary>
-    /// <returns>
-    /// Un string que representa este objeto Gramatica
-    /// </returns>
-    public override string ToString()
-    { 
-        string cadena = "";
-
-        foreach(Regla regla in reglas)
-        {
-            cadena = cadena + regla.ToString() + Environment.NewLine;
-        }
-
-        return cadena;
-    }
-
-}
 
 }
