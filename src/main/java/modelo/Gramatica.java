@@ -1,6 +1,9 @@
 package modelo;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 
 public class Gramatica {
@@ -643,17 +646,17 @@ public class Gramatica {
         int numeroDeReglas = reglas.size();
 
         //ASIGNACION
-        Dictionary<Character, Character> asignaciones = new Dictionary<Character, Character>();       
-        for(int i = 0; i < terminales.Count(); i++)
+        Hashtable<Character, Character> asignaciones = new Hashtable<Character, Character>();       
+        for(int i = 0; i < terminales.size(); i++)
         {
-            Character terminal = terminales.ElementAt(i);
-            Character variableAsignada = variablesPermitidas.ElementAt(i);
+            Character terminal = terminales.get(i);
+            Character variableAsignada = variablesPermitidas.get(i);
 
             //asignacion
-            asignaciones.Add(terminal, variableAsignada);
+            asignaciones.put(terminal, variableAsignada);
             //aumento variables
-            variables.Add(variableAsignada);
-            variablesPosibles.Remove(variableAsignada);
+            variables.add(variableAsignada);
+            variablesPosibles.remove(variableAsignada);
            
             //creo la regla nueva
             //Regla regla = new Regla(variableAsignada, new List<string>() { terminal.ToString() });
@@ -664,39 +667,41 @@ public class Gramatica {
         //MODIFICO PRODUCCIONES DE CADA REGLA
         for(int y = 0; y < numeroDeReglas; y++)
         {
-            Regla reg = reglas.ElementAt(y);
-            List<string> producciones = new List<string>(reg.producciones);
+            Regla reg = reglas.get(y);
+            ArrayList<String> producciones = new ArrayList<String>(reg.getProducciones());
 
-            for (int x = 0; x < producciones.Count(); x++)
+            for (int x = 0; x < producciones.size(); x++)
             {
-                string produccion = producciones.ElementAt(x);
+                String produccion = producciones.get(x);
 
-                if(produccion.Count() > 1)
+                if(produccion.length() > 1)
                 {
-                    for (int i = 0; i < produccion.Count(); i++)
+                    for (int i = 0; i < produccion.length(); i++)
                     {
-                        Character caracter = produccion.ElementAt(i);
-                        if (terminales.Contains(caracter))
+                        Character caracter = produccion.charAt(i);
+                        if (terminales.contains(caracter))
                         {
-                            Character variableAsignada = asignaciones[caracter];
-                            produccion = produccion.Replace(caracter, variableAsignada);
+                            Character variableAsignada = asignaciones.get(caracter);
+                            produccion = produccion.replace(caracter, variableAsignada);
               
-                            if(darGeneradores().Contains(variableAsignada) == false)
+                            if(darGeneradores().contains(variableAsignada) == false)
                             {
                                 //creo la regla nueva
-                                Regla regla = new Regla(variableAsignada, new List<string>() { caracter.ToString() });
-                                reglas.Add(regla);
-                                nuevasReglas.Add(regla);
+                            	ArrayList<String> nuevo = new ArrayList<String>();
+                            	nuevo.add(Character.toString(caracter));
+                                Regla regla = new Regla(variableAsignada, nuevo);
+                                reglas.add(regla);
+                                nuevasReglas.add(regla);
                             }
                         }
                     }
 
-                    producciones.Insert(x, produccion);
-                    producciones.RemoveAt(x + 1);
+                    producciones.add(x, produccion);
+                    producciones.remove(x + 1);
                 }   
             }
 
-            reg.producciones = producciones;
+            reg.setProducciones(producciones);
         }   
     }
 
@@ -705,16 +710,18 @@ public class Gramatica {
     /// </summary>
     public void generarProduccionesBinarias()
     {
-        variablesPosibles = variablesPosibles.Except(variables).ToList<Character>(); //para asegurar
-
-        bool reglasBinarias = todasLasReglasSonBinarias();
+//        variablesPosibles = variablesPosibles.Except(variables).ToList<Character>(); //para asegurar
+    	variablesPosibles.removeAll(variables);
+    	
+        boolean reglasBinarias = todasLasReglasSonBinarias();
         while(reglasBinarias == false)
         {
-            foreach (Regla regla in reglas)
+//            foreach (Regla regla in reglas)
+        	for(int i=0; i<reglas.size(); i++)
             {
-                regla.obtenerProduccionesBinarias(this);
+                reglas.get(i).obtenerProduccionesBinarias(this);
             }
-            reglas = reglas.Union(nuevasReglas).ToList<Regla>();
+            reglas.addAll(nuevasReglas);
 
             reglasBinarias = todasLasReglasSonBinarias();
         }
@@ -727,13 +734,13 @@ public class Gramatica {
     /// <returns>
     /// Retorna true si todas las reglas tienen sus producciones en forma binaria. En caso contrario, retorna false
     /// </returns>
-    public bool todasLasReglasSonBinarias()
+    public boolean todasLasReglasSonBinarias()
     {
-        bool respuesta = true;
+        boolean respuesta = true;
         
-        for(int i = 0; i < reglas.Count() && respuesta; i++)
+        for(int i = 0; i < reglas.size() && respuesta; i++)
         {
-            Regla r = reglas.ElementAt(i);
+            Regla r = reglas.get(i);
             respuesta = r.esBinaria();
         }
 
