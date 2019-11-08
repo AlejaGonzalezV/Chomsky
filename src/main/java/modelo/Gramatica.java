@@ -403,7 +403,7 @@ public class Gramatica {
 		// inicializacion
 		// foreach(Regla regla in reglas)
 		for (int i = 0; i < reglas.size(); i++) {
-			if (reglas.get(i).esAnuablePorProduccion() == true) // Falta este metodooo
+			if (reglas.get(i).esAnuablePorProduccion() == true) 
 			{
 				anulables.add(reglas.get(i).getGenerador());
 			}
@@ -426,6 +426,7 @@ public class Gramatica {
 				cambio = false;
 			}
 		}
+//		eliminarProduccionesLambda();
 		return anulables;
 	}
 

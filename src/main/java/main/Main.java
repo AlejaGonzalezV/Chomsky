@@ -24,10 +24,12 @@ public class Main extends Application{
 			
 		Gramatica gramatica = new Gramatica(texto);
 		gramatica.darNoTerminables();
-	//	gramatica.darAlcanzables();
+		gramatica.darNoAlcanzables();
 	//	gramatica.darNoAlcanzables();
 		
-		System.out.println(gramatica.darNoAlcanzables().toString());
+		System.out.println(gramatica.darAnulables().toString());
+		gramatica.eliminarProduccionesLambda();
+		System.out.println(gramatica.toString());
 		
 		
 	}

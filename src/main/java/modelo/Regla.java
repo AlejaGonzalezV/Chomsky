@@ -317,10 +317,9 @@ public class Regla {
                 ArrayList<String> opciones = generarArrayListaDeBinarios(numeroAnulables, limite);
                 
                 //se analiza cada opcion
-                for (int j = 0; j < opciones.size(); i++)
+                for (int j = 0; j < opciones.size(); j++)
                 {
                     String nuevaProduccion = producciones.get(i);
-                    String nuevaProduccion2 = "";
                     String opcion = opciones.get(j); //es un numero binario
 
                     ArrayList<Integer> posicionesAEliminar = new ArrayList<Integer>();
@@ -329,7 +328,7 @@ public class Regla {
                         char anulable = lista.get(k);
                         char decision = opcion.charAt(k); //'0' mantengo, '1' elimino
 
-                        if (decision == '1' == true)
+                        if (decision == '1')
                         {
                             int posicion = posiciones.get(k);
                             posicionesAEliminar.add(posicion);
@@ -343,20 +342,7 @@ public class Regla {
                         for (int w = 0; w < posicionesAEliminar.size(); w++)
                         {
                             int pos = posicionesAEliminar.get(w) - contador;
-                            char caracter = nuevaProduccion.charAt(pos);
-                            
-                            
-                            for(int p=0; p<nuevaProduccion.length(); p++) {
-                            	
-                            	if(nuevaProduccion.charAt(p) != caracter) {
-                            	
-                            		nuevaProduccion2.concat(Character.toString(nuevaProduccion.charAt(p)));
-                            		
-                            	}
-                            	
-                            }
-
-
+                            nuevaProduccion = RemoveAt(nuevaProduccion, pos);
                             contador++;
                         }
                     }
@@ -377,6 +363,7 @@ public class Regla {
             }     
         }
 
+        
         
         for(int i=0; i<producciones.size(); i++) {
         	
@@ -714,6 +701,23 @@ public class Regla {
         
         return cadena;
     }
+    
+    
+    public String RemoveAt(String str, int pos)
+    {
+        String cadena = "";
+
+        for(int i = 0; i < str.length(); i++)
+        {
+            if(i != pos)
+            {
+                cadena = cadena + str.charAt(i);
+            }
+        }
+
+        return cadena;
+    }
+    
 }
 
 /// <summary>
