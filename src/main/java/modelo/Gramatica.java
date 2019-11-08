@@ -266,6 +266,7 @@ public class Gramatica {
 		ArrayList<Character> generadores = new ArrayList<Character>(darGeneradores());
 
 		ArrayList<Regla> reglasdos = (ArrayList<Regla>) reglas.clone();
+//		ArrayList<Regla> reglasdos = new ArrayList<Regla>(reglas);
 		ArrayList<Integer> pos = new ArrayList<Integer>();
 
 		generadores.removeAll(darTerminables());
@@ -293,9 +294,11 @@ public class Gramatica {
 
 		}
 
-		reglas = (ArrayList<Regla>) reglasdos.clone();
+//		reglas = (ArrayList<Regla>) reglasdos.clone();
+//		reglas = new ArrayList<Regla>(reglasdos);
 		for (int i = pos.size() - 1; i > -1; i--) {
-			reglas.remove(pos.get(i));
+			int a = pos.get(i);
+			reglas.remove(a);
 
 		}
 
@@ -357,7 +360,7 @@ public class Gramatica {
 
 		for (int i = 0; i < reglas.size(); i++) {
 
-			for (int j = 0; j < reglas.get(i).getProducciones().size(); j++) {
+//			for (int j = 0; j < reglas.get(i).getProducciones().size(); j++) {
 				boolean esta = false;
 				for (int k = 0; k < generadores.size() && !esta; k++) {
 
@@ -366,20 +369,22 @@ public class Gramatica {
 						esta = true;
 					}
 
-					else if (reglas.get(i).getProducciones().get(j).contains(String.valueOf(generadores.get(k)))) {
-						reglasdos.get(i).getProducciones().remove(j);
-					}
+//					else if (reglas.get(i).getProducciones().get(j).contains(String.valueOf(generadores.get(k)))) {
+//						reglasdos.get(i).getProducciones().remove(j);
+//					}
 
 				}
 				esta = false;
 
 			}
 
-		}
+//		}
 
 		reglas = (ArrayList<Regla>) reglasdos.clone();
 		for (int i = pos.size() - 1; i > -1; i--) {
-			reglas.remove(pos.get(i));
+			
+			int a = pos.get(i);
+			reglas.remove(a);
 
 		}
 
