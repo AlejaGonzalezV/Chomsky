@@ -25,7 +25,6 @@ public class Main extends Application{
 		Gramatica gramatica = new Gramatica(texto);
 		gramatica.darNoTerminables();
 		gramatica.darNoAlcanzables();
-	//	gramatica.darNoAlcanzables();
 		
 		System.out.println(gramatica.darAnulables().toString());
 		gramatica.eliminarProduccionesLambda();
