@@ -19,12 +19,15 @@ public class Main extends Application{
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Chomsky normal form");
 		primaryStage.show();
-		String texto = "S : aXbX\r\n" + 
-				"\r\n" + 
-				"X : aY | bY | &\r\n" + 
-				"\r\n" + 
-				"Y : X | c";
+		String texto =  "S : BD-aB-BBBB /n A : bb-AaBD /n B : A-aA-& /n C : aA-bE /n D : aD-D /n E : aaC-&";
+				
+			
 		Gramatica gramatica = new Gramatica(texto);
+		gramatica.darNoTerminables();
+	//	gramatica.darAlcanzables();
+	//	gramatica.darNoAlcanzables();
+		
+		System.out.println(gramatica.darNoAlcanzables().toString());
 		
 		
 	}

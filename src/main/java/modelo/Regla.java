@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Regla {
 	
-	public static Character LAMBDA = '&';
+	public static char LAMBDA = '&';
 	
 	//ATRIBUTOS ---------------------------------------------------------------
     private char generador;
@@ -61,7 +61,7 @@ public class Regla {
             String produccion = producciones.get(i);
             char pr = produccion.charAt(0);
 
-            if (Character.toString(pr).equals(LAMBDA))
+            if (pr==LAMBDA)
             {
                 respuesta = true;
             }
@@ -69,7 +69,7 @@ public class Regla {
             {
             	
             	int contador = 0;
-            	for(int j=0; i<produccion.length(); i++) {
+            	for(int j=0; j<produccion.length(); j++) {
             		
             		if(Character.isLowerCase(produccion.charAt(j))) {
             			
@@ -109,7 +109,7 @@ public class Regla {
             String produccion = producciones.get(i);
             
             int contador = 0;
-        	for(int j=0; i<produccion.length(); i++) {
+        	for(int j=0; j<produccion.length(); j++) {
         		
         		if(Character.isLowerCase(produccion.charAt(j)) || terminables.contains(produccion.charAt(j))) {
         			
@@ -173,7 +173,7 @@ public class Regla {
         for(int i = 0; i < producciones.size() && !respuesta; i++)
         {
             String produccion = producciones.get(i);
-            if(produccion.equals(LAMBDA.toString()))
+            if(produccion.equals(Character.toString(LAMBDA)))
             {
                 respuesta = true;
             }
@@ -708,7 +708,7 @@ public class Regla {
             }
             else
             {
-                cadena = cadena + prod + " | ";
+                cadena = cadena + prod + " - ";
             }
         }
         
