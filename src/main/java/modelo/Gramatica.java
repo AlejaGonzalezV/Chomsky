@@ -264,44 +264,7 @@ public class Gramatica {
 	/// </returns>
 	public ArrayList<Character> darNoTerminables() {
 		ArrayList<Character> generadores = new ArrayList<Character>(darGeneradores());
-
-		ArrayList<Regla> reglasdos = (ArrayList<Regla>) reglas.clone();
-//		ArrayList<Regla> reglasdos = new ArrayList<Regla>(reglas);
-		ArrayList<Integer> pos = new ArrayList<Integer>();
-
 		generadores.removeAll(darTerminables());
-
-		for (int i = 0; i < reglas.size(); i++) {
-			boolean esta = false;
-			for (int j = 0; j < reglas.get(i).getProducciones().size() && !esta; j++) {
-				
-				for (int k = 0; k < generadores.size() && !esta; k++) {
-
-					if (reglas.get(i).getGenerador() == generadores.get(k)) {
-						pos.add(i);
-						esta = true;
-					}
-
-					else if (reglas.get(i).getProducciones().get(j).contains(String.valueOf(generadores.get(k)))) {
-						reglasdos.get(i).getProducciones().remove(j);
-					}
-
-				}
-				
-
-			}
-			esta = false;
-
-		}
-
-//		reglas = (ArrayList<Regla>) reglasdos.clone();
-//		reglas = new ArrayList<Regla>(reglasdos);
-		for (int i = pos.size() - 1; i > -1; i--) {
-			int a = pos.get(i);
-			reglas.remove(a);
-
-		}
-
 		return generadores;
 	}
 
@@ -352,41 +315,9 @@ public class Gramatica {
 	public List<Character> darNoAlcanzables() {
 		ArrayList<Character> generadores = darGeneradores();
 
-		ArrayList<Regla> reglasdos = (ArrayList<Regla>) reglas.clone();
-
+	
 		generadores.removeAll(darAlcanzables());
 
-		ArrayList<Integer> pos = new ArrayList<Integer>();
-
-		for (int i = 0; i < reglas.size(); i++) {
-
-//			for (int j = 0; j < reglas.get(i).getProducciones().size(); j++) {
-				boolean esta = false;
-				for (int k = 0; k < generadores.size() && !esta; k++) {
-
-					if (reglas.get(i).getGenerador() == generadores.get(k)) {
-						pos.add(i);
-						esta = true;
-					}
-
-//					else if (reglas.get(i).getProducciones().get(j).contains(String.valueOf(generadores.get(k)))) {
-//						reglasdos.get(i).getProducciones().remove(j);
-//					}
-
-				}
-				esta = false;
-
-			}
-
-//		}
-
-		reglas = (ArrayList<Regla>) reglasdos.clone();
-		for (int i = pos.size() - 1; i > -1; i--) {
-			
-			int a = pos.get(i);
-			reglas.remove(a);
-
-		}
 
 		return generadores;
 	}
@@ -415,6 +346,8 @@ public class Gramatica {
 			ArrayList<Character> anulablesIniciales = new ArrayList<Character>(anulables);
 
 			for (int i = 0; i < reglas.size(); i++) {
+				
+				
 				if (anulables.contains(reglas.get(i).getGenerador()) == false) {
 					if (reglas.get(i).esAnulablePorVariableAnulable(anulables) == true) {
 						anulables.add(reglas.get(i).getGenerador());

@@ -203,7 +203,7 @@ public class Regla {
 
             
             int contador = 0;
-        	for(int j=0; i<produccion.length(); i++) {
+        	for(int j=0; j<produccion.length(); j++) {
         		
         		if(anulables.contains(produccion.charAt(j))) {
         			
@@ -328,34 +328,35 @@ public class Regla {
                         char anulable = lista.get(k);
                         char decision = opcion.charAt(k); //'0' mantengo, '1' elimino
 
-                        if (decision == '1')
+                        if (anulables.contains(lista.get(i)))
                         {
                             int posicion = posiciones.get(k);
                             posicionesAEliminar.add(posicion);
                         }
                     }
 
-                    if (posicionesAEliminar.size() > 0)
+                    if (posicionesAEliminar.size() > 0&& j==producciones.get(i).length()-1)
                     {
                         //modifico la produccion con las posiciones a eliminar
                         int contador = 0;
                         for (int w = 0; w < posicionesAEliminar.size(); w++)
                         {
                             int pos = posicionesAEliminar.get(w) - contador;
-                            nuevaProduccion = RemoveAt(nuevaProduccion, pos);
+                            nuevaProduccion =  RemoveAt(nuevaProduccion, pos);
                             contador++;
                         }
                     }
 
-                    if (nuevaProduccion.equals(producciones.get(i)) == false)
+                    if (!nuevaProduccion.equals(producciones.get(i)))
                     {
                         if(nuevaProduccion.length() == 0 && generador == 'S')
                         {
-                            nuevaProduccion = Character.toString(LAMBDA);
+                            nuevaProduccion = String.valueOf(LAMBDA);
                             nuevas.add(nuevaProduccion);
                         }
                         else if (nuevaProduccion.length() > 0)
                         {
+                        	
                             nuevas.add(nuevaProduccion);
                         }                       
                     }
@@ -365,11 +366,11 @@ public class Regla {
 
         
         
-        for(int i=0; i<producciones.size(); i++) {
+        for(int n=0; n<producciones.size(); n++) {
         	
-        	if(producciones.get(i).equals(Character.toString(LAMBDA))) {
+        	if(producciones.get(n).equals(String.valueOf(LAMBDA))) {
         	
-        		producciones.remove(i);
+        		producciones.remove(n);
         		
         	}
         	
