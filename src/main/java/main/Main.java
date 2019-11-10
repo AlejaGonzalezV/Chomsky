@@ -19,7 +19,7 @@ public class Main extends Application{
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Chomsky normal form");
 		primaryStage.show();
-		String texto =  "S : aASb-BAb /n A : Aa-a-& /n B : BAB-bAb /n C : cCS-&";
+		String texto =  "S : BD-aB-BBBB /n A : bb-AaBD /n B : A-aA-& /n C : aA-bE /n D : aD-D /n E : aaC-&";
 				
 			
 		Gramatica gramatica = new Gramatica(texto);
@@ -33,7 +33,9 @@ public class Main extends Application{
 		System.out.println(gramatica.getReglas().toString());
 		gramatica.eliminarProduccionesLambda();
 		System.out.println(gramatica.getReglas().toString());
-	
+//		System.out.println(gramatica.darConjuntoUnitario('A'));
+		gramatica.eliminarProduccionesUnitarias();
+		System.out.println(gramatica.getReglas().toString());
 	
 
 	
