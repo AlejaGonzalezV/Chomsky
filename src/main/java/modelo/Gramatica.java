@@ -375,7 +375,8 @@ public class Gramatica {
 	/// </returns>
 	public ArrayList<Character> darConjuntoUnitario(char generador) {
 		// inicializacion
-		ArrayList<Character> conjunto = new ArrayList<Character>(generador);
+		ArrayList<Character> conjunto = new ArrayList<Character>();
+		conjunto.add(generador);
 		ArrayList<Character> yaEstudiado = new ArrayList<Character>();
 
 		// repeticion hasta que no haya cambios
@@ -562,7 +563,7 @@ public class Gramatica {
 			rule.eliminarProduccionesUnitarias();
 
 			// foreach (Character variable in conjuntoUnitario)
-			for (int j = 0; j < conjuntoUnitario.size(); i++) {
+			for (int j = 0; j < conjuntoUnitario.size(); j++) {
 				if ((conjuntoUnitario.get(i) == generadores.get(i)) == false) // Duda. == || equals
 				{
 					Regla regla = darRegla(conjuntoUnitario.get(i));
