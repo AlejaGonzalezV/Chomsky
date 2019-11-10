@@ -34,12 +34,15 @@ public class Main extends Application{
 		System.out.println(gramatica.darAnulables());
 		System.out.println(gramatica.getReglas().toString());
 		gramatica.eliminarProduccionesLambda();
-		for (int i = 0; i < gramatica.getReglas().size(); i++) {
-			 System.err.println(gramatica.darConjuntoUnitario(gramatica.getReglas().get(i).getGenerador()));
-		}
-//		System.out.println(gramatica.darConjuntoUnitario('A'));
 
 	 System.out.println(gramatica.getReglas().toString());
+
+		System.out.println(gramatica.getReglas().toString());
+		System.out.println(gramatica.darConjuntoUnitario('B'));
+		gramatica.eliminarProduccionesUnitarias();
+		System.out.println(gramatica.getReglas().toString());
+	
+
 
 	
 		
