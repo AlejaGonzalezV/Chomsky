@@ -375,7 +375,8 @@ public class Gramatica {
 	/// </returns>
 	public ArrayList<Character> darConjuntoUnitario(char generador) {
 		// inicializacion
-		ArrayList<Character> conjunto = new ArrayList<Character>(generador);
+		ArrayList<Character> conjunto = new ArrayList<Character>();
+		conjunto.add(generador);
 		ArrayList<Character> yaEstudiado = new ArrayList<Character>();
 
 		// repeticion hasta que no haya cambios
@@ -387,9 +388,8 @@ public class Gramatica {
 				if (yaEstudiado.contains(conjunto.get(i)) == false) {
 					Regla regla = darRegla(conjunto.get(i));
 					if (regla != null) {
-						// conjunto =
-						// conjunto.get(i).Union(regla.produccionesUnitarias()).ToList<Character>();
-						conjunto.addAll(regla.produccionesUnitarias()); // Falta el metodoooo
+						
+						conjunto.addAll(regla.produccionesUnitarias()); 
 					}
 					yaEstudiado.add(conjunto.get(i));
 				}
@@ -562,10 +562,10 @@ public class Gramatica {
 			rule.eliminarProduccionesUnitarias();
 
 			// foreach (Character variable in conjuntoUnitario)
-			for (int j = 0; j < conjuntoUnitario.size(); i++) {
-				if ((conjuntoUnitario.get(i) == generadores.get(i)) == false) // Duda. == || equals
+			for (int j = 0; j < conjuntoUnitario.size(); j++) {
+				if ((conjuntoUnitario.get(j) == generadores.get(i)) == false) // Duda. == || equals
 				{
-					Regla regla = darRegla(conjuntoUnitario.get(i));
+					Regla regla = darRegla(conjuntoUnitario.get(j));
 					if (regla != null) {
 						ArrayList<String> produccionesNuevas = new ArrayList<String>(
 								regla.darProduccionesNoUnitarias());

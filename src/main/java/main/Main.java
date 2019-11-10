@@ -20,7 +20,7 @@ public class Main extends Application{
 		primaryStage.setTitle("Chomsky normal form");
 		primaryStage.show();
 
-		String texto =  "S : BD-aB-BBBB /n A : bb-Aa-BD /n B : A-aA-& /n C : aA-bE /n D : aD-D /n E : aaC-&";
+		String texto =  "S : BD-aB-BBBB /n A : bb-AaBD /n B : A-aA-& /n C : aA-bE /n D : aD-D /n E : aaC-&";
 
 				
 			
@@ -35,7 +35,7 @@ public class Main extends Application{
 		System.out.println(gramatica.getReglas().toString());
 		gramatica.eliminarProduccionesLambda();
 		System.out.println(gramatica.getReglas().toString());
-//		System.out.println(gramatica.darConjuntoUnitario('A'));
+		System.out.println(gramatica.darConjuntoUnitario('B'));
 		gramatica.eliminarProduccionesUnitarias();
 		System.out.println(gramatica.getReglas().toString());
 	
