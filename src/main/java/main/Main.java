@@ -43,6 +43,12 @@ public class Main extends Application{
 		gramatica.generarProduccionesBinarias();
 		System.out.println(gramatica.getReglas().toString());
 
+
+	
+
+
+	
+
 		
 	}
 	
