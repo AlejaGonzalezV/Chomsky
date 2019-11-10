@@ -537,10 +537,10 @@ public class Gramatica {
 			
 			for (int j = 0; j < reglas.get(i).getProducciones().size(); j++) {
 				
-				if(reglas.get(i).getProducciones().get(j).contains("&"))
+				if(reglas.get(i).getProducciones().get(j).contains("&")&&reglas.get(i).getGenerador()!='S')
 				{
 					
-					reglas.get(i).getProducciones().set(j, "");
+					reglas.get(i).getProducciones().remove(j);
 				}
 				
 			}

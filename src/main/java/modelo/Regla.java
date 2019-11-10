@@ -294,6 +294,13 @@ public class Regla {
 					nuevas.add(produccionNueva);
 				}
 			}
+			
+			else if(produccionNueva.equals(""))
+			{
+				produccionNueva="&";
+				nuevas.add(produccionNueva);
+					
+			}
 
 		}
 
