@@ -656,7 +656,7 @@ public class Gramatica {
 		variablesPosibles.removeAll(variables);
 
 		boolean reglasBinarias = todasLasReglasSonBinarias();
-		while (reglasBinarias == false) {
+		while (!reglasBinarias) {
 			// foreach (Regla regla in reglas)
 			for (int i = 0; i < reglas.size(); i++) {
 				reglas.get(i).obtenerProduccionesBinarias(this);
