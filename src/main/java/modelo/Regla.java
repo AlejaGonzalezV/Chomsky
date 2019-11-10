@@ -418,7 +418,6 @@ public class Regla {
 		ArrayList<String> nuevas = new ArrayList<String>();
 		for (int i = 0; i < producciones.size(); i++) {
 			String produccion = producciones.get(i);
-			String produccion2 = "";
 			int tamanio = produccion.length();
 			if (tamanio > 2) // produccion no binaria
 			{
@@ -432,86 +431,27 @@ public class Regla {
 				if (regla != null) {
 					// Reemplazo esos caracteres por la variable que los genera
 
-					char busco = produccion.charAt(produccion.length() - 1);
-
-					for (int j = 0; j < produccion.length(); j++) {
-
-						if (produccion.charAt(j) != busco) {
-
-							produccion2.concat(Character.toString(produccion.charAt(j)));
-							produccion = "";
-
-						}
-
-					}
-
-					busco = produccion2.charAt(produccion.length() - 1);
-
-					for (int j = 0; j < produccion.length(); j++) {
-
-						if (produccion2.charAt(j) != busco) {
-
-							produccion.concat(Character.toString(produccion.charAt(j)));
-							produccion2 = "";
-
-						}
-
-					}
-
-					// regla.generador.ToString()
+					produccion = RemoveAt(produccion,produccion.length()-1);
+					produccion = RemoveAt(produccion,produccion.length()-1);
 					produccion = produccion + Character.toString(regla.getGenerador());
 					nuevas.add(produccion);
 				} else {
 					// creo la produccion nueva
 
 					char variable = g.getVariablesPosibles().get(0);
-					ArrayList<Character> a = new ArrayList<Character>(g.getVariablesPosibles());
-					a.remove(0); // menos variables
-					g.setVariablesPosibles(a);
-					ArrayList<Character> temp = new ArrayList<Character>(g.getVariables());
-					temp.add(variable);
-					g.setVariables(temp);
-
-					// agrego regla
-					ArrayList<String> m = new ArrayList<String>();
-					m.add(nuevaProduccion);
-					Regla nueva = new Regla(variable, new ArrayList<String>(m));
-					ArrayList<Regla> b = new ArrayList<Regla>(g.getNuevasReglas());
-					b.add(nueva);
-					g.setNuevasReglas(b);
-
-					// modifico produccion
-
-					char busco = produccion.charAt(produccion.length() - 1);
-
-					for (int j = 0; j < produccion.length(); j++) {
-
-						if (produccion.charAt(j) != busco) {
-
-							produccion2.concat(Character.toString(produccion.charAt(j)));
-
-						}
-
-					}
-
-					produccion = produccion2;
-					produccion2 = "";
-					busco = produccion.charAt(produccion.length() - 1);
-
-					for (int j = 0; j < produccion.length(); j++) {
-
-						if (produccion.charAt(j) != busco) {
-
-							produccion2.concat(Character.toString(produccion.charAt(j)));
-
-						}
-
-					}
-
-					produccion = produccion2;
-
+					g.variablesPosibles.remove(0);
+					g.getVariables().add(variable);
+					
+					ArrayList<String> temp = new ArrayList<String>();
+					temp.add(nuevaProduccion);
+					Regla nueva = new Regla(variable,temp);
+					g.nuevasReglas.add(nueva);
+					
+					produccion = RemoveAt(produccion, produccion.length()-1);
+					produccion = RemoveAt(produccion, produccion.length()-1);
 					produccion = produccion + Character.toString(variable);
 					nuevas.add(produccion);
+					
 				}
 			} else {
 				nuevas.add(produccion);

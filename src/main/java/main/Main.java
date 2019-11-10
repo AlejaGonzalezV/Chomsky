@@ -34,9 +34,6 @@ public class Main extends Application{
 		System.out.println(gramatica.darAnulables());
 		System.out.println(gramatica.getReglas().toString());
 		gramatica.eliminarProduccionesLambda();
-
-	 System.out.println(gramatica.getReglas().toString());
-
 		System.out.println(gramatica.getReglas().toString());
 		System.out.println(gramatica.darConjuntoUnitario('B'));
 		gramatica.eliminarProduccionesUnitarias();
@@ -45,11 +42,12 @@ public class Main extends Application{
 		System.out.println(gramatica.getReglas().toString());
 		gramatica.generarProduccionesBinarias();
 		System.out.println(gramatica.getReglas().toString());
+
 	
 
 
 	
-		
+
 		
 	}
 	
