@@ -5,11 +5,10 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="528.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
    <children>
       <TextArea fx:id="txtGramatica" layoutX="23.0" layoutY="23.0" prefHeight="229.0" prefWidth="251.0" />
-      <TextArea fx:id="txtFnc" layoutX="290.0" layoutY="23.0" prefHeight="229.0" prefWidth="463.0" />
+      <TextArea fx:id="txtFnc" editable="false" layoutX="290.0" layoutY="23.0" prefHeight="229.0" prefWidth="463.0" />
       <Label layoutX="108.0" layoutY="254.0" text="Gramatica">
          <font>
             <Font size="18.0" />
@@ -21,19 +20,15 @@
          </font>
       </Label>
       <Separator layoutX="17.0" layoutY="285.0" prefHeight="4.0" prefWidth="737.0" />
-      <Button fx:id="noTermBut" alignment="CENTER" contentDisplay="CENTER" layoutX="24.0" layoutY="311.0" mnemonicParsing="false" onAction="#noTerm" prefHeight="46.0" prefWidth="81.0" text="Eliminar no terminables" textAlignment="CENTER" wrapText="true" />
-      <Button fx:id="noAlcBut" layoutX="24.0" layoutY="380.0" mnemonicParsing="false" onAction="#noAlc" prefHeight="46.0" prefWidth="81.0" text="Eliminar no alcanzables" wrapText="true" />
-      <Button fx:id="prodLambdaBut" layoutX="18.0" layoutY="449.0" mnemonicParsing="false" onAction="#prodLambda" prefHeight="61.0" prefWidth="93.0" text="Eliminar producciones lambda" wrapText="true" />
-      <Button fx:id="prodUnitBut" layoutX="362.0" layoutY="304.0" mnemonicParsing="false" onAction="#prodUnit" prefHeight="61.0" prefWidth="106.0" text="Simular producciones unitarias" wrapText="true" />
-      <Button fx:id="variableTermBut" layoutX="362.0" layoutY="380.0" mnemonicParsing="false" onAction="#variableTerm" prefHeight="61.0" prefWidth="106.0" text="Agregar variable por cada terminal" wrapText="true" />
-      <Button fx:id="prodBinBut" layoutX="362.0" layoutY="457.0" mnemonicParsing="false" onAction="#prodBin" prefHeight="46.0" prefWidth="106.0" text="Producciones binarias" wrapText="true" />
-      <ComboBox fx:id="conjuntoUnit" layoutX="488.0" layoutY="322.0" prefHeight="25.0" prefWidth="93.0" />
-      <Label layoutX="488.0" layoutY="303.0" text="Conjunto unitario" />
-      <TextField fx:id="noTermTxt" layoutX="149.0" layoutY="322.0" />
-      <TextField fx:id="noAlcTxt" layoutX="149.0" layoutY="391.0" />
-      <TextField fx:id="prodLambdaTxt" layoutX="149.0" layoutY="467.0" />
-      <TextField fx:id="prodUnitTxt" layoutX="604.0" layoutY="322.0" prefHeight="25.0" prefWidth="131.0" />
-      <TextField fx:id="variableTermTxt" layoutX="507.0" layoutY="391.0" />
-      <TextField fx:id="prodBinTxt" layoutX="507.0" layoutY="467.0" />
+      <Button fx:id="noTermBut" alignment="CENTER" contentDisplay="CENTER" layoutX="109.0" layoutY="312.0" mnemonicParsing="false" onAction="#noTerm" prefHeight="46.0" prefWidth="81.0" text="Eliminar no terminables" textAlignment="CENTER" wrapText="true" />
+      <Button fx:id="noAlcBut" layoutX="109.0" layoutY="381.0" mnemonicParsing="false" onAction="#noAlc" prefHeight="46.0" prefWidth="81.0" text="Eliminar no alcanzables" wrapText="true" />
+      <Button fx:id="prodLambdaBut" layoutX="103.0" layoutY="449.0" mnemonicParsing="false" onAction="#prodLambda" prefHeight="61.0" prefWidth="93.0" text="Eliminar producciones lambda" wrapText="true" />
+      <Button fx:id="prodUnitBut" layoutX="469.0" layoutY="304.0" mnemonicParsing="false" onAction="#prodUnit" prefHeight="61.0" prefWidth="106.0" text="Simular producciones unitarias" wrapText="true" />
+      <Button fx:id="variableTermBut" layoutX="469.0" layoutY="380.0" mnemonicParsing="false" onAction="#variableTerm" prefHeight="61.0" prefWidth="106.0" text="Agregar variable por cada terminal" wrapText="true" />
+      <Button fx:id="prodBinBut" layoutX="469.0" layoutY="457.0" mnemonicParsing="false" onAction="#prodBin" prefHeight="46.0" prefWidth="106.0" text="Producciones binarias" wrapText="true" />
+      <TextField fx:id="noTermTxt" editable="false" layoutX="224.0" layoutY="322.0" />
+      <TextField fx:id="noAlcTxt" editable="false" layoutX="224.0" layoutY="391.0" />
+      <TextField fx:id="prodLambdaTxt" editable="false" layoutX="224.0" layoutY="467.0" />
+      <Button fx:id="limpiarBut" layoutX="675.0" layoutY="480.0" mnemonicParsing="false" onAction="#limpiar" text="Limpiar" />
    </children>
 </AnchorPane>

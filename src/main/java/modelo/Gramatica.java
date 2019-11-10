@@ -137,7 +137,7 @@ public class Gramatica {
 	}
 
 	public void modGramatica(String texto) throws Exception {
-		String[] lineas = texto.split("/n");
+		String[] lineas = texto.split("\n");
 		for (int i = 0; i < lineas.length; i++) {
 			String linea = lineas[i];
 
@@ -740,7 +740,7 @@ public class Gramatica {
 
 		// foreach(Regla regla in reglas)
 		for (int i = 0; i < reglas.size(); i++) {
-			cadena = cadena + reglas.get(i).toString() + "/n";
+			cadena = cadena + reglas.get(i).toString() + "\n";
 		}
 
 		return cadena;
