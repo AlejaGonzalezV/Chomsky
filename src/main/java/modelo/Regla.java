@@ -275,8 +275,6 @@ public class Regla {
 
 				}
 
-				
-
 			}
 
 			boolean esta = false;
@@ -294,12 +292,11 @@ public class Regla {
 					nuevas.add(produccionNueva);
 				}
 			}
-			
-			else if(produccionNueva.equals(""))
-			{
-				produccionNueva="&";
+
+			else if (produccionNueva.equals("")) {
+				produccionNueva = "&";
 				nuevas.add(produccionNueva);
-					
+
 			}
 
 		}
@@ -431,9 +428,9 @@ public class Regla {
 				if (regla != null) {
 					// Reemplazo esos caracteres por la variable que los genera
 
-					produccion = RemoveAt(produccion,produccion.length()-1);
-					produccion = RemoveAt(produccion,produccion.length()-1);
-					produccion = produccion + Character.toString(regla.getGenerador());
+					produccion = RemoveAt(produccion, produccion.length() - 1);
+					produccion = RemoveAt(produccion, produccion.length() - 1);
+					produccion = produccion + String.valueOf(regla.getGenerador());
 					nuevas.add(produccion);
 				} else {
 					// creo la produccion nueva
@@ -441,17 +438,17 @@ public class Regla {
 					char variable = g.getVariablesPosibles().get(0);
 					g.variablesPosibles.remove(0);
 					g.getVariables().add(variable);
-					
+
 					ArrayList<String> temp = new ArrayList<String>();
 					temp.add(nuevaProduccion);
-					Regla nueva = new Regla(variable,temp);
+					Regla nueva = new Regla(variable, temp);
 					g.nuevasReglas.add(nueva);
-					
-					produccion = RemoveAt(produccion, produccion.length()-1);
-					produccion = RemoveAt(produccion, produccion.length()-1);
+
+					produccion = RemoveAt(produccion, produccion.length() - 1);
+					produccion = RemoveAt(produccion, produccion.length() - 1);
 					produccion = produccion + Character.toString(variable);
 					nuevas.add(produccion);
-					
+
 				}
 			} else {
 				nuevas.add(produccion);
@@ -479,22 +476,21 @@ public class Regla {
 
 			if (produccion.length() == 1) {
 				char caracter = produccion.charAt(0);
-				if (Character.isLowerCase(caracter) == false && (caracter == LAMBDA) == false) // si es una letra
-																								// minuscula o lambda
+				if (Character.isLowerCase(caracter)==false && (caracter == LAMBDA)==false) // si es una letra
+																				// minuscula o lambda
 				{
-					respuesta = false;
+					respuesta = true;
 				}
 			} else if (produccion.length() == 2) {
 				char caracter1 = produccion.charAt(0);
 				char caracter2 = produccion.charAt(1);
-				if (Character.isUpperCase(caracter1) == false || Character.isUpperCase(caracter2) == false) // si ambas
-																											// son
-																											// mayusculas
-																											// (variables)
+				if (Character.isUpperCase(caracter1) == false || Character.isUpperCase(caracter2) == false) // si ambas																							// (variables)
 				{
 					respuesta = false;
 				}
-			} else {
+			} 
+			
+			else {
 				respuesta = false;
 			}
 		}

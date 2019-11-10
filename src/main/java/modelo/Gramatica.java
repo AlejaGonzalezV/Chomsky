@@ -661,7 +661,25 @@ public class Gramatica {
 			for (int i = 0; i < reglas.size(); i++) {
 				reglas.get(i).obtenerProduccionesBinarias(this);
 			}
-			reglas.addAll(nuevasReglas);
+			
+			for (int i = 0; i < nuevasReglas.size(); i++) {
+				
+				boolean esta=false;
+				for (int j = 0; j < reglas.size()&&!esta; j++) {
+					
+					if(reglas.get(j).getGenerador()==nuevasReglas.get(i).getGenerador())
+					{
+						esta=true;
+					}
+					
+				}
+				
+				if(!esta)
+				{reglas.add(nuevasReglas.get(i));}
+				
+				
+			}
+			
 
 			reglasBinarias = todasLasReglasSonBinarias();
 		}
