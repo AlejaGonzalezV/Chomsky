@@ -275,10 +275,24 @@ public class Regla {
 
 				}
 
+				
+
 			}
 
+			boolean esta = false;
 			if (!produccionNueva.equals("") && !produccionNueva.equals(produccion)) {
-				nuevas.add(produccionNueva);
+
+				for (int j = 0; j < producciones.size(); j++) {
+
+					if (producciones.get(j).contains(produccionNueva)) {
+						esta = true;
+					}
+
+				}
+
+				if (!esta) {
+					nuevas.add(produccionNueva);
+				}
 			}
 
 		}

@@ -534,6 +534,16 @@ public class Gramatica {
 		// foreach(Regla regla in reglas)
 		for (int i = 0; i < reglas.size(); i++) {
 			reglas.get(i).simularProduccionesLambda(anulables);
+			
+			for (int j = 0; j < reglas.get(i).getProducciones().size(); j++) {
+				
+				if(reglas.get(i).getProducciones().get(j).contains("&"))
+				{
+					
+					reglas.get(i).getProducciones().set(j, "");
+				}
+				
+			}
 
 		}
 	}
