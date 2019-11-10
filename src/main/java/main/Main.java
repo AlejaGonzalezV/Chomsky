@@ -19,7 +19,7 @@ public class Main extends Application{
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Chomsky normal form");
 		primaryStage.show();
-		String texto =  "S : aASb-BAb /n A : Aa-a-& /n B : BAB-bAb /n C : cCS-&";
+		String texto =  "S : BD-aB-BBBB /n A : bb-Aa-BD /n B : A-aA-& /n C : aA-bE /n D : aD-D /n E : aaC-&";
 				
 			
 		Gramatica gramatica = new Gramatica(texto);

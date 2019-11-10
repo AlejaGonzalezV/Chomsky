@@ -284,7 +284,7 @@ public class Regla {
 
 				for (int j = 0; j < producciones.size(); j++) {
 
-					if (producciones.get(j).contains(produccionNueva)) {
+					if (producciones.get(j).equals(produccionNueva)) {
 						esta = true;
 					}
 
