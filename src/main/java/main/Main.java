@@ -43,6 +43,8 @@ public class Main extends Application{
 		System.out.println(gramatica.getReglas().toString());
 		gramatica.generarVariablesPorCadaTerminal();
 		System.out.println(gramatica.getReglas().toString());
+		gramatica.generarProduccionesBinarias();
+		System.out.println(gramatica.getReglas().toString());
 	
 
 
