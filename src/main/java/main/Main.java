@@ -41,6 +41,8 @@ public class Main extends Application{
 		System.out.println(gramatica.darConjuntoUnitario('B'));
 		gramatica.eliminarProduccionesUnitarias();
 		System.out.println(gramatica.getReglas().toString());
+		gramatica.generarVariablesPorCadaTerminal();
+		System.out.println(gramatica.getReglas().toString());
 	
 
 

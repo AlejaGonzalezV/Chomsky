@@ -620,14 +620,14 @@ public class Gramatica {
 			for (int x = 0; x < producciones.size(); x++) {
 				String produccion = producciones.get(x);
 
-				if (produccion.length() > 1) {
+				if (produccion.length() >= 1) {
 					for (int i = 0; i < produccion.length(); i++) {
 						Character caracter = produccion.charAt(i);
 						if (terminales.contains(caracter)) {
 							Character variableAsignada = asignaciones.get(caracter);
 							produccion = produccion.replace(caracter, variableAsignada);
 
-							if (darGeneradores().contains(variableAsignada) == false) {
+							if (!darGeneradores().contains(variableAsignada)) {
 								// creo la regla nueva
 								ArrayList<String> nuevo = new ArrayList<String>();
 								nuevo.add(Character.toString(caracter));
