@@ -4,54 +4,42 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
-
+/*
+ * Clase Gramatica
+ * Clase que se encarga de simular una gramatica 
+ */
 public class Gramatica {
 
-	// ATRIBUTOS
-	// --------------------------------------------------------------------------------
-
-	// Reglas de la gramatica
+	
+	/*
+	 * Atributo de tipo ArrayList. Arreglo de tipo Regla con todas las reglas contenidas en la gramatica
+	 */
 	public ArrayList<Regla> reglas;
 
-	// Representa todas las variables utilizadas.
+	/**
+	 * Atributo de tipo ArrayList. Arreglo de tipo Character que representa las variables contenidas en la gramatica
+	 */
 	public ArrayList<Character> variables;
 
-	// terminales en la gramatica
+	/**
+	 * Atributo de tipo ArrayList. Arreglo de tipo Character que representa las terminales contenidas en la gramatica
+	 */
 	public ArrayList<Character> terminales;
 
-	// variables posibles
+	/*
+	 * Atributo de tipo ArrayList. Arreglo de tipo Character que representa todas las variables posibles presentes en la gramatica
+	 */
 	public ArrayList<Character> variablesPosibles = new ArrayList<Character>();
-	// { 'A','B'};
 
-	// nuevas reglas que se generan en el proceso de obtener producciones binarias
+	/**
+	 * Atributo de tipo Arraylist. Arreglo de tipo Regla que almacena todas las nuevas reglas que puedan agregarse a la gramatica
+	 */
 	public ArrayList<Regla> nuevasReglas = new ArrayList<Regla>();
 
-	// //matriz de resultado al aplicar el algoritmo CYK sobre una cadena
-	// public List<string>[,] matriz;
-
-	// CONSTRUCTOR
-	// --------------------------------------------------------------------------------
-	/// <summary>
-	/// Genera un objeto Gramatica a partir de una cadena de texto que contiene la
-	// gramatica expresada en
-	/// un formato como el siguiente:
-	/// S : aXbX
-	/// X : aY | bY | &
-	/// Y : X | c
-	/// </summary>
-	/// <param name="texto">
-	/// Cadena de texto con la gramatica
-	/// </param>
-	/// <exception cref="System.Exception">
-	/// Lanza excepciones en los casos siguientes:
-	/// CASO 1: Regla no respeta el formato de separacion por ":"
-	/// CASO 2: La parte izquierda de una regla es mas de un caracter (tamaño mayor
-	// a 1)
-	/// CASO 3: La parte izquierda de una regla no es una letra mayuscula
-	/// CASO 4: Una produccion contiene un caracter que no es un terminal, variable
-	// o labmda
-	/// CASO 5: Una produccion contiene labmda y mas caracteres.
-	/// </exception>
+	/**
+	 * Metodo constructor de la clase Gramatica
+	 * @param texto. String que representa la gramatica introducida por el usuario
+	 */
 	public Gramatica(String texto) {
 		reglas = new ArrayList<Regla>();
 		variables = new ArrayList<Character>();
@@ -65,6 +53,9 @@ public class Gramatica {
 		}
 	}
 
+	/*
+	 * Metodos get y set de los atributos de la clase 
+	 */
 	public ArrayList<Regla> getReglas() {
 		return reglas;
 	}
@@ -105,6 +96,10 @@ public class Gramatica {
 		this.variablesPosibles = variablesPosibles;
 	}
 
+	
+	/*
+	 * Metodo que agrega a un arreglo todas las variables posibles que pueden existir en la gramatica
+	 */
 	public void agregar() {
 
 		variablesPosibles.add('A');
@@ -136,6 +131,11 @@ public class Gramatica {
 
 	}
 
+	/**
+	 * Metodo que recibe la gramatica ingresada por el usuario y la descompone para encontrar las variables y las terminales contenidas en la gramatica
+	 * @param texto Gramatica introducida por el usuario
+	 * @throws Exception
+	 */
 	public void modGramatica(String texto) throws Exception {
 		String[] lineas = texto.split("\n");
 		for (int i = 0; i < lineas.length; i++) {
@@ -211,32 +211,23 @@ public class Gramatica {
 		}
 	}
 
-	// METODOS
-	// ------------------------------------------------------------------------------------------
-
-	/// <summary>
-	/// Obtiene las variables terminables de la gramatica
-	/// </summary>
-	/// <returns>
-	/// Retorna una lista con las variables terminables
-	/// </returns>
+	/**
+	 * Metodo que calcula las variables terminables de la gramatica
+	 * @return Arreglo que contiene las variables terminables de la gramatica
+	 */
 	public ArrayList<Character> darTerminables() {
 		ArrayList<Character> terminables = new ArrayList<Character>();
 
-		// inicializacion
-		// foreach(Regla regla in reglas)
 		for (int i = 0; i < reglas.size(); i++) {
 			if (reglas.get(i).esTerminablePorProduccion() == true) {
 				terminables.add(reglas.get(i).getGenerador());
 			}
 		}
 
-		// repeticion hasta que no haya cambios
 		boolean cambio = true;
 		while (cambio) {
 			ArrayList<Character> terminablesIniciales = new ArrayList<Character>(terminables);
 
-			// foreach (Regla regla in reglas)
 			for (int i = 0; i < reglas.size(); i++) {
 				Character generador = reglas.get(i).getGenerador();
 
@@ -256,42 +247,37 @@ public class Gramatica {
 		return terminables;
 	}
 
-	/// <summary>
-	/// Obtiene las variables no terminables de la gramatica
-	/// </summary>
-	/// <returns>
-	/// Retorna una lista con las variables no terminables
-	/// </returns>
+	/**
+	 * Metodo que calcula las variables no terminables de la gramatica
+	 * @return arreglo que contiene las variables no terminables
+	 */
 	public ArrayList<Character> darNoTerminables() {
 		ArrayList<Character> generadores = new ArrayList<Character>(darGeneradores());
 		generadores.removeAll(darTerminables());
 		return generadores;
 	}
 
-	/// <summary>
-	/// Obtiene las variables alcanzables de la gramatica
-	/// </summary>
-	/// <returns>
-	/// Retorna una lista con las variables alcanzables
-	/// </returns>
-	public List<Character> darAlcanzables() {
-		// inicializacion
+	/**
+	 * Metodo que calcula las variables alcanzables de la gramatica
+	 * @return arreglo que contiene las variables alcanzables
+	 */
+	public ArrayList<Character> darAlcanzables() {
+		
 		ArrayList<Character> alcanzables = new ArrayList<Character>();
 		alcanzables.add('S');
 		ArrayList<Character> yaAnalizadas = new ArrayList<Character>();
 
-		// repeticion hasta que no haya cambios
 		boolean cambio = true;
 		while (cambio) {
 			ArrayList<Character> alcanzablesIniciales = new ArrayList<Character>(alcanzables);
-			// foreach(Character c in alcanzables)
+			
 			for (int i = 0; i < alcanzables.size(); i++) {
 				if (yaAnalizadas.contains(alcanzables.get(i)) == false) {
 					Regla regla = darRegla(alcanzables.get(i));
 					if (regla != null) {
 						ArrayList<Character> variablesAlcanzables = regla.variablesAlcanzables();
 						alcanzables.addAll(variablesAlcanzables);
-						// alcanzables = alcanzables.Union(variablesAlcanzables).ToList<Character>();
+						
 
 					}
 
@@ -306,13 +292,11 @@ public class Gramatica {
 		return alcanzables;
 	}
 
-	/// <summary>
-	/// Obtiene las variables no alcanzables de la gramatica
-	/// </summary>
-	/// <returns>
-	/// Retorna una lista con las variables no alcanzables
-	/// </returns>
-	public List<Character> darNoAlcanzables() {
+	/**
+	 * metodo que calcula las variables no alcanzables de la gramatica
+	 * @return arreglo que contiene las variables no alcanzables de la gramatica
+	 */
+	public ArrayList<Character> darNoAlcanzables() {
 		ArrayList<Character> generadores = darGeneradores();
 
 	
@@ -322,17 +306,13 @@ public class Gramatica {
 		return generadores;
 	}
 
-	/// <summary>
-	/// Obtiene las variables anulables de la gramatica
-	/// </summary>
-	/// <returns>
-	/// Retorna una lista con las variables anulables
-	/// </returns>
+	/**
+	 * Metodo que calcula las variables anulables de la gramatica
+	 * @return arreglo que contiene las variables anulables de la gramatica
+	 */
 	public ArrayList<Character> darAnulables() {
 		ArrayList<Character> anulables = new ArrayList<Character>();
 
-		// inicializacion
-		// foreach(Regla regla in reglas)
 		for (int i = 0; i < reglas.size(); i++) {
 			if (reglas.get(i).esAnuablePorProduccion() == true) 
 			{
@@ -340,14 +320,12 @@ public class Gramatica {
 			}
 		}
 
-		// repeticion hasta que no haya cambios
 		boolean cambio = true;
 		while (cambio) {
 			ArrayList<Character> anulablesIniciales = new ArrayList<Character>(anulables);
 
 			for (int i = 0; i < reglas.size(); i++) {
-				
-				
+					
 				if (anulables.contains(reglas.get(i).getGenerador()) == false) {
 					if (reglas.get(i).esAnulablePorVariableAnulable(anulables) == true) {
 						anulables.add(reglas.get(i).getGenerador());
@@ -359,27 +337,21 @@ public class Gramatica {
 				cambio = false;
 			}
 		}
-//		eliminarProduccionesLambda();
+
 		return anulables;
 	}
 
-	/// <summary>
-	/// Obtiene el conjunto unitario de una variable
-	/// </summary>
-	/// <param name="generador">
-	/// Representa la variable a la cual se calcula el conjunto unitario
-	/// </param>
-	/// <returns>
-	/// Una lista con las variables pertenecientes al conjunto unitario de la
-	/// variable pasada como parametro
-	/// </returns>
+	/**
+	 * Metodo que calcula el conjunto unitario de una variable
+	 * @param generador. variable a la cual se le calcula el conjunto unitario
+	 * @return Arreglo que contiene las variables del conjunto unitario
+	 */
 	public ArrayList<Character> darConjuntoUnitario(char generador) {
-		// inicializacion
+
 		ArrayList<Character> conjunto = new ArrayList<Character>();
 		conjunto.add(generador);
 		ArrayList<Character> yaEstudiado = new ArrayList<Character>();
 
-		// repeticion hasta que no haya cambios
 		boolean cambio = true;
 		while (cambio) {
 			ArrayList<Character> conjuntoInicial = new ArrayList<Character>(conjunto);
@@ -412,10 +384,13 @@ public class Gramatica {
 	/// Una lista con todas las variables de la gramatica que tienen una regla
 	/// asociada (actuan como generadores)
 	/// </returns>
+	/**
+	 * Metodo que devuelve las variables que actuan como generadores. Una variable actua como generador si tiene una regla asociada
+	 * @return Arreglo que contiene todas las variables generadoras
+	 */
 	public ArrayList<Character> darGeneradores() {
 		ArrayList<Character> respuesta = new ArrayList<Character>();
 
-		// foreach (Regla regla in reglas)
 		for (int i = 0; i < reglas.size(); i++) {
 			respuesta.add(reglas.get(i).getGenerador());
 		}
@@ -423,16 +398,11 @@ public class Gramatica {
 		return respuesta;
 	}
 
-	/// <summary>
-	/// Obtiene la regla asociada a una variable
-	/// </summary>
-	/// <param name="generador">
-	/// Representa la variable de la cual se quiere obtener su regla
-	/// </param>
-	/// <returns>
-	/// Un objeto Regla que representa la regla asociada a la variable pasada como
-	/// parametro
-	/// </returns>
+	/**
+	 * Metodo que obtiene la regla asociada a una variable
+	 * @param generador Variable a la cual se le quiere encontrar su regla asociada
+	 * @return Regla asociada a una variable
+	 */
 	public Regla darRegla(Character generador) {
 
 		ArrayList<Regla> busqueda = new ArrayList<Regla>();
@@ -460,11 +430,9 @@ public class Gramatica {
 
 	}
 
-	/// <summary>
-	/// Metodo que elimina todas las variables no terminables de la gramatica.
-	/// Al eliminar una variable no terminable se pierde su regla asociada y todas
-	/// las producciones que la contenian
-	/// </summary>
+	/**
+	 * Metodo que elimina todas las variables no terminables de la gramatica
+	 */
 	public void eliminarNoTerminables() {
 		ArrayList<Character> terminables = new ArrayList<Character>(darTerminables());
 		ArrayList<Character> generadores = new ArrayList<Character>(darGeneradores());
@@ -480,8 +448,6 @@ public class Gramatica {
 
 		}
 
-		// En cada regla eliminar producciones que contengan variables NO terminables
-		// foreach (Regla rule in reglas)
 		for (int i = 0; i < reglas.size(); i++) {
 			reglas.get(i).eliminarProduccionesConLasVariables(noTerminables);
 			if (reglas.get(i).getProducciones().size() == 0) {
@@ -490,31 +456,23 @@ public class Gramatica {
 		}
 	}
 
-	/// <summary>
-	/// Metodo que elimina todas las variables no alcanzables de la gramatica.
-	/// Al eliminar una variable no alcanzable se pierde su regla asociada y todas
-	/// las producciones que la contenian
-	/// </summary>
+	/**
+	 * Metodo que elimina todas las variables no alcanzables de la gramatica
+	 */
 	public void eliminarNoAlcanzables() {
 		ArrayList<Character> alcanzables = new ArrayList<Character>(darAlcanzables());
 		ArrayList<Character> generadores = new ArrayList<Character>(darGeneradores());
 		ArrayList<Character> noAlcanzables = new ArrayList<Character>(generadores);
 		noAlcanzables.removeAll(alcanzables);
 
-		// ArrayList<Character> noAlcanzables =
-		// generadores.Except(alcanzables).ToList<Character>();
-
-		// foreach (Character noAlc in noAlcanzables)
 		for (int i = 0; i < noAlcanzables.size(); i++) {
-			// eliminar la regla
+		
 			Regla regla = darRegla(noAlcanzables.get(i));
 			if (regla != null) {
 				reglas.remove(regla);
 			}
 		}
 
-		// En cada regla eliminar producciones que contengan variables NO Alcanzables
-		// foreach (Regla rule in reglas)
 		for (int i = 0; i < reglas.size(); i++) {
 			reglas.get(i).eliminarProduccionesConLasVariables(noAlcanzables);
 			if (reglas.get(i).getProducciones().size() == 0) {
@@ -524,14 +482,12 @@ public class Gramatica {
 
 	}
 
-	/// <summary>
-	/// Metodo que elimina y simula, añadiendo nuevas producciones, todas las
-	/// producciones labmda.
-	/// </summary>
+	/**
+	 * Metodo que elimina y simula, añadiendo nuevas producciones, todas las producciones lambda
+	 */
 	public void eliminarProduccionesLambda() {
 		ArrayList<Character> anulables = new ArrayList<Character>(darAnulables());
 
-		// foreach(Regla regla in reglas)
 		for (int i = 0; i < reglas.size(); i++) {
 			reglas.get(i).simularProduccionesLambda(anulables);
 			
@@ -548,23 +504,20 @@ public class Gramatica {
 		}
 	}
 
-	/// <summary>
-	/// Metodo que elimina y simula, añadiendo nuevas producciones, todas las
-	/// producciones unitarias
-	/// </summary>
+	/**
+	 * Metodo que elimina y simula, añadiendo nuevas producciones, todas las producciones unitarias
+	 */
 	public void eliminarProduccionesUnitarias() {
 		ArrayList<Character> generadores = new ArrayList<Character>(darGeneradores());
 
-		// foreach(Character gen in generadores)
 		for (int i = 0; i < generadores.size(); i++) {
 			ArrayList<Character> conjuntoUnitario = new ArrayList<Character>(darConjuntoUnitario(generadores.get(i)));
 			Regla rule = darRegla(generadores.get(i));
 			rule.eliminarProduccionesUnitarias();
 
-			// foreach (Character variable in conjuntoUnitario)
 			for (int j = 0; j < conjuntoUnitario.size(); j++) {
 
-				if ((conjuntoUnitario.get(j) == generadores.get(i)) == false) // Duda. == || equals
+				if ((conjuntoUnitario.get(j) == generadores.get(i)) == false)
 
 				{
 					Regla regla = darRegla(conjuntoUnitario.get(j));
@@ -579,40 +532,26 @@ public class Gramatica {
 
 	}
 
-	/// <summary>
-	/// Toda produccion con tamaño mayor a 1 y que contenga un terminal, debe
-	/// reemplazar dicho terminal por
-	/// una variable. Este metodo realiza esta tarea teniendo como recurso las
-	/// variables posibles y las variables
-	/// hasta el momento utilizadas.
-	/// Se añaden nuevas reglas con el formato (variable nueva -> terminal
-	/// reemplazado)
-	/// </summary>
+	/**
+	 * Metodo que reemplaza cada terminal por una nueva variable, añadiendo esta ultima a la gramatica
+	 */
 	public void generarVariablesPorCadaTerminal() {
 		ArrayList<Character> variablesPermitidas = new ArrayList<Character>(variablesPosibles);
 		variablesPermitidas.removeAll(variables);
 		int numeroDeReglas = reglas.size();
 
-		// ASIGNACION
 		Hashtable<Character, Character> asignaciones = new Hashtable<Character, Character>();
 		for (int i = 0; i < terminales.size(); i++) {
 			Character terminal = terminales.get(i);
 			Character variableAsignada = variablesPermitidas.get(i);
 
-			// asignacion
 			asignaciones.put(terminal, variableAsignada);
-			// aumento variables
 			variables.add(variableAsignada);
 			variablesPosibles.remove(variableAsignada);
 
-			// creo la regla nueva
-			// Regla regla = new Regla(variableAsignada, new List<string>() {
-			// terminal.ToString() });
-			// reglas.Add(regla);
-			// nuevasReglas.Add(regla);
 		}
 
-		// MODIFICO PRODUCCIONES DE CADA REGLA
+		
 		for (int y = 0; y < numeroDeReglas; y++) {
 			Regla reg = reglas.get(y);
 			ArrayList<String> producciones = new ArrayList<String>(reg.getProducciones());
@@ -628,7 +567,7 @@ public class Gramatica {
 							produccion = produccion.replace(caracter, variableAsignada);
 
 							if (!darGeneradores().contains(variableAsignada)) {
-								// creo la regla nueva
+								
 								ArrayList<String> nuevo = new ArrayList<String>();
 								nuevo.add(Character.toString(caracter));
 								Regla regla = new Regla(variableAsignada, nuevo);
@@ -647,17 +586,15 @@ public class Gramatica {
 		}
 	}
 
-	/// <summary>
-	/// Convierte cada produccion de una regla en una produccion binaria
-	/// </summary>
+	/**
+	 * Metodo que convierte cada produccion de una regla en una produccion binaria
+	 */
 	public void generarProduccionesBinarias() {
-		// variablesPosibles = variablesPosibles.Except(variables).ToList<Character>();
-		// //para asegurar
 		variablesPosibles.removeAll(variables);
 
 		boolean reglasBinarias = todasLasReglasSonBinarias();
 		while (!reglasBinarias) {
-			// foreach (Regla regla in reglas)
+			
 			for (int i = 0; i < reglas.size(); i++) {
 				reglas.get(i).obtenerProduccionesBinarias(this);
 			}
@@ -693,7 +630,11 @@ public class Gramatica {
 	/// <returns>
 	/// Retorna true si todas las reglas tienen sus producciones en forma binaria.
 	/// En caso contrario, retorna false
-	/// </returns>
+	// </returns>
+	/**
+	 * Metodo que determina si todas las reglas de la gramatica tienen sus producciones en forma binaria
+	 * @return boolean que representa si todas las reglas tienen sus producciones en forma binaria o no
+	 */
 	public boolean todasLasReglasSonBinarias() {
 		boolean respuesta = true;
 
@@ -705,27 +646,15 @@ public class Gramatica {
 		return respuesta;
 	}
 
-	/// <summary>
-	/// Busca sobre las nuevas reglas generadas (que son unitarias, en el sentido
-	/// que solo tienen una produccion),
-	/// una regla que tenga al parametro como produccion.
-	/// Las nuevas reglas generadas estan representadas por el atributo
-	/// nuevasReglas.
-	/// </summary>
-	/// <param name="prod">
-	/// String que representa una produccion
-	/// </param>
-	/// <returns>
-	/// Retorna la regla que tiene como produccion al parametro. En caso de que no
-	/// encuentre ninguna regla,
-	/// retorna null.
-	/// </returns>
+	/*
+	 * Metodo que busca sobre las nuevas reglas generadas (que son unitarias, en el sentido que solo tienen una produccion), una regla que tenga al parametro como produccion.
+	 */
 	public Regla reglaUnitariaConProduccion(String prod) {
 		Regla buscada = null;
 
 		for (int i = 0; i < nuevasReglas.size() && buscada == null; i++) {
 			Regla r = nuevasReglas.get(i);
-			List<String> producciones = r.getProducciones(); // una lista de una unica produccion
+			List<String> producciones = r.getProducciones(); 
 
 			if (producciones.get(0).equals(prod)) {
 				buscada = r;
@@ -735,10 +664,15 @@ public class Gramatica {
 		return buscada;
 	}
 
+	
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString() {
 		String cadena = "";
 
-		// foreach(Regla regla in reglas)
+		
 		for (int i = 0; i < reglas.size(); i++) {
 			cadena = cadena + reglas.get(i).toString() + "\n";
 		}

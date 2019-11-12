@@ -1,0 +1,6 @@
+S : BD-aB-BBBB
+A : bb-AaBD
+B : A-aA-& 
+C : aA-bE
+D : aD-D
+E : aaC-&

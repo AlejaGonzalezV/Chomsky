@@ -1,0 +1,4 @@
+S : ABC-BaC-aB
+A : Aa-a
+B : BAB-bab
+C : cC-c

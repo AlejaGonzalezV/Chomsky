@@ -4,9 +4,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import modelo.Gramatica;
 
 public class Main extends Application{
 
@@ -16,39 +15,12 @@ public class Main extends Application{
 		Parent root = FXMLLoader.load(getClass().getResource("/view/GUI.fxml"));
 		Scene scene = new Scene(root);
 		
+		primaryStage.getIcons().add(new Image("https://ih0.redbubble.net/image.447257112.7871/flat,1000x1000,075,f.u3.jpg"));
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Chomsky normal form");
 		primaryStage.show();
 
-		String texto =  "S : BD-aB-BBBB \n A : bb-AaBD \n B : A-aA-& \n C : aA-bE \n D : aD-D \n E : aaC-&";
 
-				
-			
-		Gramatica gramatica = new Gramatica(texto);
-		
-		
-		System.out.println(gramatica.darNoTerminables());
-		gramatica.eliminarNoTerminables();
-		System.out.println(gramatica.darNoAlcanzables());
-		gramatica.eliminarNoAlcanzables();
-		System.out.println(gramatica.darAnulables());
-		System.out.println(gramatica.getReglas().toString());
-		gramatica.eliminarProduccionesLambda();
-		System.out.println(gramatica.getReglas().toString());
-		System.out.println(gramatica.darConjuntoUnitario('B'));
-		gramatica.eliminarProduccionesUnitarias();
-		System.out.println(gramatica.getReglas().toString());
-		gramatica.generarVariablesPorCadaTerminal();
-		System.out.println(gramatica.getReglas().toString());
-		gramatica.generarProduccionesBinarias();
-		System.out.println(gramatica.getReglas().toString());
-
-	
-
-
-	
-
-		
 	}
 	
 	public static void main (String[] args) {

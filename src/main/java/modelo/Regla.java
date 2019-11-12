@@ -1,23 +1,39 @@
 package modelo;
 
 import java.util.ArrayList;
-
+/**
+ * Clase Regla
+ * Clase que representa una regla de una gramatica
+ */
 public class Regla {
 
+	/**
+	 * Constante de tipo char que representa el simbolo lambda
+	 */
 	public static char LAMBDA = '&';
 
-	// ATRIBUTOS ---------------------------------------------------------------
+	/**
+	 * Atributo de tipo char que representa la variable generadora de la regla
+	 */
 	private char generador;
+	/**
+	 * Atributo de tipo ArrayList. Arreglo de tipo String que representa las producciones de cada regla
+	 */
 	private ArrayList<String> producciones;
 
-	// CONSTRUCTOR -----------------------------------------------------------------
+	/**
+	 * Metodo constructor de la clase Regla
+	 * @param pgenerador char que representa la variable generadora
+	 * @param pproducciones arreglo de tipo String que representa las producciones de cada regla
+	 */
 	public Regla(char pgenerador, ArrayList<String> pproducciones) {
 		generador = pgenerador;
 		producciones = pproducciones;
 	}
 
-	// METODOS ---------------------------------------------------------------------
-
+/*
+ * Metodos get y set de los atributos de la clase Regla
+ */
 	public char getGenerador() {
 		return generador;
 	}
@@ -34,16 +50,10 @@ public class Regla {
 		this.producciones = producciones;
 	}
 
-	/// <summary>
-	/// Determina si la regla es terminable por la presencia de una produccion
-	/// lambda o por una produccion
-	/// con solo terminales
-	/// </summary>
-	/// <returns>
-	/// Retorna true si la regla es terminable por tener una produccion lambda o una
-	/// produccion
-	/// con solo terminales. En caso contrario, retorna false
-	/// </returns>
+	/**
+	 * Metodo que determina si la regla es terminable por la presencia de una produccion lambda o por una produccion con solo terminales
+	 * @return boolean que determina si la regla es terminable o no
+	 */
 	public boolean esTerminablePorProduccion() {
 		boolean respuesta = false;
 
@@ -75,19 +85,13 @@ public class Regla {
 		return respuesta;
 	}
 
-	/// <summary>
-	/// Determina si la regla es terminable por el hecho de tener una produccion con
-	/// una variable terminable
-	/// que la lleva a ser terminable.
-	/// </summary>
-	/// <param name="terminables">
-	/// ArrayLista que contiene todas las variables terminables
-	/// </param>
-	/// <returns>
-	/// Retorna true si la regla es terminable por la presencia de una variable
-	/// terminable
-	/// que la lleva a ser terminable. En caso contrario, retorna false.
-	/// </returns>
+
+
+	/**
+	 * Metodo que determina si la regla es terminable por el hecho de tener una produccion con una variable terminable
+	 * @param terminables. Arreglo de tipo Character que representa las variables terminables
+	 * @return boolean que representa si la regla es terminable por variable terminable o no
+	 */
 	public boolean esTerminablePorVariableTerminable(ArrayList<Character> terminables) {
 		boolean respuesta = false;
 
@@ -113,18 +117,14 @@ public class Regla {
 		return respuesta;
 	}
 
-	/// <summary>
-	/// Determina las variables alcanzables directas, es decir, aquellas variables
-	/// que estan en las producciones
-	/// </summary>
-	/// <returns>
-	/// Retorna una ArrayLista con todas las variables en las producciones.
-	/// </returns>
+
+	/*
+	 * Metodo que determina las variables alcanzables directas
+	 */
 	public ArrayList<Character> variablesAlcanzables() {
 		ArrayList<Character> variablesAlcanzables = new ArrayList<Character>();
 		ArrayList<Character> lista = new ArrayList<Character>();
 
-		// foreach(String produccion in producciones)
 		for (int i = 0; i < producciones.size(); i++) {
 
 			for (int j = 0; j < producciones.get(i).length(); j++) {
@@ -144,13 +144,11 @@ public class Regla {
 		return variablesAlcanzables;
 	}
 
-	/// <summary>
-	/// Determina si la regla es anulable por tener una produccion lambda.
-	/// </summary>
-	/// <returns>
-	/// Retorna true si la regla contiene una produccion lambda. En caso contrario,
-	/// retorna false.
-	/// </returns>
+
+	/**
+	 * Metodo que determina si la regla es anulable por tener una produccion lambda
+	 * @return boolean que representa si la regla es anulable por produccion o no
+	 */
 	public boolean esAnuablePorProduccion() {
 		boolean respuesta = false;
 
@@ -164,19 +162,10 @@ public class Regla {
 		return respuesta;
 	}
 
-	/// <summary>
-	/// Determina si la regla es anulable por el hecho de tener una produccion con
-	/// una variable anulable que
-	/// la lleva a ser anulable
-	/// </summary>
-	/// <param name="anulables">
-	/// ArrayLista con todas las variables anulables
-	/// </param>
-	/// <returns>
-	/// Retorna true en caso de que la regla sea anulable por tener una produccion
-	/// con una variable anulable que la
-	/// lleva a ser anulable. En caso contrario, retorna false.
-	/// </returns>
+
+	/*
+	 * Metodo que determina si la regla es anulable por el hecho de tener una produccion con una variable anulable
+	 */
 	public boolean esAnulablePorVariableAnulable(ArrayList<Character> anulables) {
 		boolean respuesta = false;
 
@@ -203,12 +192,10 @@ public class Regla {
 		return respuesta;
 	}
 
-	/// <summary>
-	/// Obtiene todas las producciones unitarias
-	/// </summary>
-	/// <returns>
-	/// ArrayLista con todas las producciones unitarias.
-	/// </returns>
+	/**
+	 * Metodo que obtiene todas las producciones unitarias
+	 * @return arreglo con todas las producciones unitarias
+	 */
 	public ArrayList<Character> produccionesUnitarias() {
 		ArrayList<Character> respuesta = new ArrayList<Character>();
 
@@ -224,20 +211,15 @@ public class Regla {
 		return respuesta;
 	}
 
-	/// <summary>
-	/// metodo utilizado para:
-	/// 1. eliminar producciones con variables no terminables
-	/// 2. eliminar producciones con variables no alcanzables
-	/// </summary>
-	/// <param name="variables">
-	/// ArrayLista con las variables
-	/// </param>
+	/*
+	 * Metodo que elimina producciones con variables no terminables o producciones con variables no alcanzables
+	 * @param Arreglo que contiene las variables 
+	 */
 	public void eliminarProduccionesConLasVariables(ArrayList<Character> variables) {
 		ArrayList<String> eliminar = new ArrayList<String>();
 
-		// foreach(char variable in variables)
 		for (int i = 0; i < variables.size(); i++) {
-			// foreach (String produccion in producciones)
+
 			for (int j = 0; j < producciones.size(); j++) {
 				if (producciones.get(j).contains(variables.get(i).toString()) == true) {
 					if (eliminar.contains(producciones.get(j)) == false) {
@@ -251,19 +233,15 @@ public class Regla {
 
 	}
 
-	// aASb
-	/// <summary>
-	/// Metodo utilizado para simular las producciones lambda
-	/// </summary>
-	/// <param name="anulables">
-	/// ArrayLista con las variables anulables
-	/// </param>
+
+	/**
+	 * Metodo que simula las producciones lambda
+	 * @param anulables. Arreglo que contiene las variables que son anulables
+	 */
 	public void simularProduccionesLambda(ArrayList<Character> anulables) {
 		ArrayList<String> nuevas = new ArrayList<String>();
 		boolean es = false;
 
-		// se evalua cada produccion
-		// foreach(String produccion in producciones)
 		for (int i = 0; i < producciones.size(); i++) {
 			String produccion = producciones.get(i);
 			String produccionNueva = produccion;
@@ -307,18 +285,13 @@ public class Regla {
 
 	}
 
-	/// <summary>
-	/// Genera una ArrayLista de numeros binarios en formato String
-	/// </summary>
-	/// <param name="componentes">
-	/// indica cuantos componentes(tamaño) debe tener cada binario generado
-	/// </param>
-	/// <param name="limite">
-	/// indica cuantos binarios generar
-	/// </param>
-	/// <returns>
-	/// ArrayLista de numeros binarios en formato String
-	/// </returns>
+
+	/**
+	 * Metodo que genera un arreglo de numeros binarios en formato String
+	 * @param componentes indica cuantos componenter debe tener cada binario generado
+	 * @param limite indica cuantos binarios generar
+	 * @return
+	 */
 	public ArrayList<String> generarArrayListaDeBinarios(int componentes, int limite) {
 		ArrayList<String> lista = new ArrayList<String>();
 
@@ -331,18 +304,12 @@ public class Regla {
 
 	}
 
-	/// <summary>
-	/// Convierte un numero en formato decimal a su formato en binario
-	/// </summary>
-	/// <param name="numero">
-	/// Numero decimal
-	/// </param>
-	/// <param name="componentes">
-	/// indica cuantos componentes (tamaño) debe tener el binario generado
-	/// </param>
-	/// <returns>
-	/// String que representa el numero binario
-	/// </returns>
+	
+	/*
+	 * Metodo que convierte un numero en formato decimal a binario
+	 * @param numero. Numero decimal
+	 * @param componentes. indica cuantos componentes debe tener el binario generado
+	 */
 	public String decimalABinario(int numero, int componentes) {
 		String sal = "";
 
@@ -365,12 +332,10 @@ public class Regla {
 		return sal;
 	}
 
-	/// <summary>
-	/// Determina cuales son las producciones no unitarias
-	/// </summary>
-	/// <returns>
-	/// ArrayLista con las producciones no unitarias
-	/// </returns>
+	/**
+	 * Metodo que determina cuales son las producciones no unitarias
+	 * @return arreglo con las producciones no unitarias
+	 */
 	public ArrayList<String> darProduccionesNoUnitarias() {
 		ArrayList<String> respuesta = new ArrayList<String>();
 
@@ -388,35 +353,31 @@ public class Regla {
 		return respuesta;
 	}
 
-	/// <summary>
-	/// Modifica el atributo producciones añadiendo nuevas producciones
-	/// </summary>
-	/// <param name="nuevasProducciones">
-	/// ArrayLista de String con las nuevas producciones a añadir.
-	/// </param>
+	/**
+	 * Metodo que modifica el atributo producciones, añadiendo nuevos elementos
+	 * @param nuevasProducciones arreglo de String con todas las nuevas producciones a añadir
+	 */
 	public void modificarProducciones(ArrayList<String> nuevasProducciones) {
 		producciones.addAll(nuevasProducciones);
 	}
 
-	/// <summary>
-	/// Elimina las producciones unitarias
-	/// </summary>
+	/*
+	 * Metodo que elimina las producciones unitarias
+	 */
 	public void eliminarProduccionesUnitarias() {
 		producciones = darProduccionesNoUnitarias();
 	}
 
-	/// <summary>
-	/// Convierte todas las producciones en producciones binarias
-	/// </summary>
-	/// <param name="g">
-	/// Referencia al Objeto Gramatica al cual pertenece este objeto Regla
-	/// </param>
+	/*
+	 * Metodo que convierte todas las producciones en producciones binarias
+	 * @param g. Referencia al objeto Gramatica al cual pertenece este objeto Regla
+	 */
 	public void obtenerProduccionesBinarias(Gramatica g) {
 		ArrayList<String> nuevas = new ArrayList<String>();
 		for (int i = 0; i < producciones.size(); i++) {
 			String produccion = producciones.get(i);
 			int tamanio = produccion.length();
-			if (tamanio > 2) // produccion no binaria
+			if (tamanio > 2) 
 			{
 				char caracter1 = produccion.charAt(tamanio - 1);
 				char caracter2 = produccion.charAt(tamanio - 2);
@@ -426,14 +387,12 @@ public class Regla {
 				Regla regla = g.reglaUnitariaConProduccion(nuevaProduccion);
 
 				if (regla != null) {
-					// Reemplazo esos caracteres por la variable que los genera
 
 					produccion = RemoveAt(produccion, produccion.length() - 1);
 					produccion = RemoveAt(produccion, produccion.length() - 1);
 					produccion = produccion + String.valueOf(regla.getGenerador());
 					nuevas.add(produccion);
 				} else {
-					// creo la produccion nueva
 
 					char variable = g.getVariablesPosibles().get(0);
 					g.variablesPosibles.remove(0);
@@ -460,14 +419,10 @@ public class Regla {
 
 	}
 
-	/// <summary>
-	/// Determina si la regla es binaria.
-	/// Una regla es binaria si todas sus producciones constan de dos variables o 1
-	/// terminal
-	/// </summary>
-	/// <returns>
-	/// Retorna true si la regla es binaria. En caso contrario, retorna false
-	/// </returns>
+	/**
+	 * Metodo que determina si la regla es binaria
+	 * @return boolean que representa si la regla es binaria o no
+	 */
 	public boolean esBinaria() {
 		boolean respuesta = true;
 
@@ -476,15 +431,15 @@ public class Regla {
 
 			if (produccion.length() == 1) {
 				char caracter = produccion.charAt(0);
-				if (Character.isLowerCase(caracter)==false && (caracter == LAMBDA)==false) // si es una letra
-																				// minuscula o lambda
+				if (Character.isLowerCase(caracter)==false && (caracter == LAMBDA)==false) 
+					
 				{
 					respuesta = true;
 				}
 			} else if (produccion.length() == 2) {
 				char caracter1 = produccion.charAt(0);
 				char caracter2 = produccion.charAt(1);
-				if (Character.isUpperCase(caracter1) == false || Character.isUpperCase(caracter2) == false) // si ambas																							// (variables)
+				if (Character.isUpperCase(caracter1) == false || Character.isUpperCase(caracter2) == false) 																						// (variables)
 				{
 					respuesta = false;
 				}
@@ -498,27 +453,22 @@ public class Regla {
 		return respuesta;
 	}
 
-	/// <summary>
-	/// Determina si la regla contiene una produccion pasada como parametro
-	/// </summary>
-	/// <param name="prod">
-	/// String que representa la produccion
-	/// </param>
-	/// <returns>
-	/// Retorna true si la regla contiene la produccion. En caso contrario, retorna
-	/// false.
-	/// </returns>
+	
+	/**
+	 * Metodo que determina si la regla contiene una produccion pasada como parametro
+	 * @param prod String que representa la produccion
+	 * @return boolean que representa si la regla contiene o no la produccion
+	 */
 	public boolean contieneProduccion(String prod) {
 		return producciones.contains(prod);
 	}
 
-	/// <summary>
-	/// Genera una cadena de texto que representa este objeto Regla
-	/// </summary>
-	/// <returns>
-	/// String que representa este objeto Regla.
-	/// </returns>
+
 	@Override
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString() {
 		String cadena = generador + " -> ";
 
@@ -537,6 +487,12 @@ public class Regla {
 		return cadena;
 	}
 
+	/**
+	 * Metodo que elimina un caracter de una cadena
+	 * @param str String que representa la cadena
+	 * @param pos int que representa la posicion en la cual se encuentra el caracter a eliminar
+	 * @return
+	 */
 	public String RemoveAt(String str, int pos) {
 		String cadena = "";
 
@@ -551,36 +507,3 @@ public class Regla {
 
 }
 
-/// <summary>
-/// Extensiones
-/// </summary>
-// public static class MisExtensiones
-// {
-// /// <summary>
-// /// Metodo que permite eliminar un caracter de una cadena dando su posicion
-// /// </summary>
-// /// <param name="str">
-// /// cadena de texto
-// /// </param>
-// /// <param name="pos">
-// /// entero que representa la posicion en la cual se encuentra el caracter a
-/// eliminar
-// /// </param>
-// /// <returns>
-// /// cadena de texto sin el caracter.
-// /// </returns>
-// public static String RemoveAt(this String str, int pos)
-// {
-// String cadena = "";
-//
-// for(int i = 0; i < str.Count(); i++)
-// {
-// if(i != pos)
-// {
-// cadena = cadena + str.ElementAt(i);
-// }
-// }
-//
-// return cadena;
-// }
-// }

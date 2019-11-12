@@ -1,17 +1,22 @@
 package controller;
 
 import java.net.URL;
+
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import modelo.Gramatica;
 
+/**
+ * Clase Controller
+ * clase que se encarga de la interaccion directa con la interfaz de usuario
+ *
+ */
 public class Controller implements Initializable{
 
 	Gramatica g;
@@ -33,7 +38,6 @@ public class Controller implements Initializable{
 
     @FXML
     private Button prodUnitBut;
-
 
     @FXML
     private Button noAlcBut;
@@ -65,6 +69,7 @@ public class Controller implements Initializable{
 		prodUnitBut.setDisable(true);
 		variableTermBut.setDisable(true);
 		prodBinBut.setDisable(true);
+		noTermBut.setDisable(false);
 		txtGramatica.setText("");
 		txtFnc.setText("");
 
